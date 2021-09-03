@@ -11,7 +11,7 @@ public interface IQuestionService {
 
 	Iterable<Question> getAllQuestions();
 
-	void save(@Valid Question question);
+	void save(@Valid Question question, Integer id);
 
 	Optional<Question> getQuestion(Integer id);
 

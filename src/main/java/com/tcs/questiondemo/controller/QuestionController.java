@@ -52,10 +52,10 @@ public class QuestionController {
 		return new ResponseEntity<Question>(HttpStatus.NOT_FOUND);
 	}
 
-	@PostMapping
+	@PostMapping("/{id}")
 	@ResponseStatus(code = HttpStatus.CREATED)
-	public void saveQuestion(@Valid @RequestBody Question question) {
-		questionService.save(question);
+	public void saveQuestion(@PathVariable("id") Integer id, @Valid @RequestBody Question question) {
+		questionService.save(question, id);
 		logger.debug(question.getQuestion());
 	}
 	

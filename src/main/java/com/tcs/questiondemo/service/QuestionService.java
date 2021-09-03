@@ -1,8 +1,10 @@
 package com.tcs.questiondemo.service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.validation.Valid;
 
@@ -11,18 +13,31 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.tcs.questiondemo.dao.IQuestionRepository;
+import com.tcs.questiondemo.dao.IUserRepository;
 import com.tcs.questiondemo.entity.Question;
+import com.tcs.questiondemo.entity.User;
 import com.tcs.questiondemo.exception.QuestionNotFoundException;
+import com.tcs.questiondemo.exception.UserNotFoundException;
 
 @Service
 public class QuestionService implements IQuestionService {
 
 	@Autowired
 	IQuestionRepository questionRepository;
+	
+	@Autowired
+	IUserRepository userRepository;
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	public void save(@Valid Question question) {
+	public void save(@Valid Question question, Integer id) {
+		Optional<User> user = userRepository.findById(id);
+		if(!user.isPresent()) {
+			throw new UserNotFoundException("user does not exist");
+		}
+		Set<Question> questionFromUser = new HashSet<>();
+		questionFromUser.add(question);
+		user.get().setQuestions(questionFromUser);
 		questionRepository.save(question);
 	}
 
