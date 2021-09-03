@@ -1,5 +1,6 @@
 package com.tcs.questiondemo.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -34,6 +35,11 @@ public class QuestionController {
 	@GetMapping
 	public Iterable<Question> getQuestion() {
 		return questionService.getAllQuestions();
+	}
+	
+	@GetMapping("/specifiedupvote/{upvote}")
+	public List<Question> getQuestionWithGreaterThanSpecifiedVotes(@PathVariable("upvote") Integer upvote) {
+		return questionService.getSpecificQuestions(upvote);
 	}
 	
 	@GetMapping("/{id}")

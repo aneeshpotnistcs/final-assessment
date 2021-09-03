@@ -1,5 +1,7 @@
 package com.tcs.questiondemo.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -27,6 +29,19 @@ public class QuestionService implements IQuestionService {
 	@Override
 	public Iterable<Question> getAllQuestions() {
 		return questionRepository.findAll();
+	}
+	
+	@Override
+	public List<Question> getSpecificQuestions(Integer upvote) {
+		
+		Iterable<Question> questionFromDB = questionRepository.findAll();
+		List<Question> ques = new ArrayList<Question>();
+		for (Question question2 : questionFromDB) {
+			if(question2.getUpvote()>= upvote)
+				ques.add(question2);
+		}
+		return ques;
+
 	}
 
 	@Override
@@ -57,5 +72,7 @@ public class QuestionService implements IQuestionService {
 			questionRepository.save(questionFromDB.get());
 		}
 	}
+
+	
 
 }

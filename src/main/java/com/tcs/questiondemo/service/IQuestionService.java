@@ -1,5 +1,6 @@
 package com.tcs.questiondemo.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -17,5 +18,7 @@ public interface IQuestionService {
 	void updateUpvote(Question question, Integer id);
 
 	void updateDownvote(Question question, Integer id);
+
+	List<Question> getSpecificQuestions(Integer upvote);
 
 }
