@@ -17,6 +17,7 @@ public class Question {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	@NotBlank
-	private String firstName;
-	private String vote;
+	private String question;
+	private int upvote;
+	private int downvote;
 }
